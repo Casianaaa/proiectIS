@@ -1,0 +1,100 @@
+/* Containerul general */
+.county-detail-container {
+    padding: 180px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Titlul principal */
+.county-detail-container h2 {
+    text-align: center;
+    font-size: 2em;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+/* Cardurile pentru fiecare atracție */
+.attraction-card {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr; /* Stânga: imagine și titlu, mijloc: descriere, dreapta: radio buttons */
+    gap: 20px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    align-items: center; /* Aliniază vertical elementele din fiecare coloană */
+}
+
+/* Imaginea și titlul atracției */
+.attraction-image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: -10px; /* Mută titlul și imaginea mai sus */
+}
+
+.attraction-image {
+    width: 100%;
+    max-width: 200px; /* Crește dimensiunea imaginii */
+    height: 150px; /* Crește înălțimea imaginii */
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.attraction-image-container h3 {
+    font-size: 1.5em; /* Crește dimensiunea fontului titlului */
+    color: #333;
+    text-align: center;
+    margin-bottom: 5px; /* Mută titlul mai aproape de imagine */
+}
+
+/* Descrierea atracției */
+.attraction-description {
+    font-size: 1em;
+    color: #666;
+    line-height: 1.5;
+    text-align: left;
+    align-self: center;
+    margin-top: 0; /* Elimină mutarea în sus */
+    padding: 0 10px; /* Adaugă spațiu lateral dacă este necesar */
+}
+
+
+/* Opțiunile de tip radio */
+.radio-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    justify-self: center; /* Centrare în grilă */
+    text-align: right;
+}
+
+.radio-options label {
+    font-size: 0.9em;
+}
+
+.radio-options input {
+    margin-right: 5px;
+}
+
+/* Responsivitate */
+@media (max-width: 600px) {
+    .attraction-card {
+        grid-template-columns: 1fr; /* Pe mobil, afișează elementele pe coloane */
+        text-align: center;
+    }
+
+    .radio-options {
+        align-items: center;
+    }
+
+    .attraction-image {
+        max-width: 150px;
+        height: auto;
+    }
+}
