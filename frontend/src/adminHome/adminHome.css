@@ -1,0 +1,13 @@
+.admin-home {
+    text-align: center;
+    margin-top: 100px;
+  }
+  
+  .logout-btn {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+  }
+  

@@ -8,7 +8,7 @@ const Header = ({ isAuthenticated, onLogout }) => {
     <header>
       <div className="header-content">
         <nav className="left-links">
-          <Link to="/">Acasă</Link>
+          <Link to="/home">Acasă</Link>
           <Link to="/counties">Județele</Link>
           <Link to="/topAttractions">Top atracții</Link>
         </nav>

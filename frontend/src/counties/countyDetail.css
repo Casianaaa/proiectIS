@@ -1,8 +1,8 @@
 /* Containerul general */
 .county-detail-container {
     padding: 180px;
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
     color: #333;
 }
 
