@@ -1,11 +1,9 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,4 +14,13 @@ public class Client {
     private Integer idClient;
     private String name;
     private String email;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<NotVisit> visits;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<WantToVisit> wantToVisits;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<NotVisit> notVisits;
 }

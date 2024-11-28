@@ -10,7 +10,7 @@ const AdminLoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); // Resetare erori
+    // setError(''); // Resetare erori
     const loginData = {
       username: username,
       parola: password,
@@ -25,13 +25,13 @@ const AdminLoginPage = () => {
           body: JSON.stringify(loginData),
       });
       console.log(response.status);
-      const data = await response.json();
-      console.log(data);
-      console.log(response);
-      if (response.status(200)) {
+
+      if (response.ok) {
         console.log("cev aaaa");
+       
         navigate('/adminHome'); // Redirecționează către pagina admin
-      } else {
+      } 
+      else {
         setError(data.message || 'Autentificare eșuată!');
       }
     } catch (err) {
