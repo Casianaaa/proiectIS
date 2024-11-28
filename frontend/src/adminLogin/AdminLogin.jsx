@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './adminLogin.css'; // Stiluri pentru pagina de login admin
+import './adminLogin.css'; // Stiluri CSS pentru login
 
 const AdminLoginPage = () => {
   const navigate = useNavigate();
@@ -10,28 +10,33 @@ const AdminLoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch('/api/admin-login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
+    setError(''); // Resetare erori
+    const loginData = {
+      username: username,
+      parola: password,
+  };
+
+  try {
+      const response = await fetch('http://localhost:8080/admins/login', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(loginData),
       });
+      console.log(response.status);
       const data = await response.json();
-      if (response.ok) {
-        navigate('/adminHome'); // Redirect la pagina de admin
+      console.log(data);
+      console.log(response);
+      if (response.status(200)) {
+        console.log("cev aaaa");
+        navigate('/adminHome'); // Redirecționează către pagina admin
       } else {
-        setError(data.message);
+        setError(data.message || 'Autentificare eșuată!');
       }
     } catch (err) {
       setError('A apărut o eroare. Te rugăm să încerci mai târziu.');
     }
-  };
-
-  const handleLoginClick = () => {
-    // Poți să pui logica pentru a loga direct adminul, de exemplu
-    navigate('/adminHome');
   };
 
   return (
@@ -45,6 +50,7 @@ const AdminLoginPage = () => {
           id="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          required
         />
         <label htmlFor="password">Password:</label>
         <input
@@ -52,12 +58,10 @@ const AdminLoginPage = () => {
           id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
         <button type="submit">Login Admin</button>
       </form>
-      <button onClick={handleLoginClick} className="btn admin-login-btn">
-        Login Direct Admin
-      </button>
     </div>
   );
 };
