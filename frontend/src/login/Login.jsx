@@ -3,20 +3,26 @@ import { useNavigate } from 'react-router-dom'; // Importăm useNavigate
 import './login.css';
 
 const Login = ({ onLogin }) => {
-  const [username, setUsername] = useState('');
+  const [email, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate(); // Folosim useNavigate pentru navigare
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const loginData = {
+      email: email,
+      parola: password,
+    };
+
     try {
-      const response = await fetch('/api/login', {
+      const response = await fetch('/clients/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email, password }),
       });
       const data = await response.json();
       if (response.ok) {
@@ -54,6 +60,7 @@ const Login = ({ onLogin }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit">Login</button>
+        <button type="submit">Register</button>
       </form>
       <button onClick={handleLoginClick} className="direct-client-login">
         Login Direct Client

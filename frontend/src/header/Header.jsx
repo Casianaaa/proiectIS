@@ -23,7 +23,7 @@ const Header = ({ isAuthenticated, onLogout }) => {
           {isAuthenticated ? (
             <button onClick={onLogout}>Logout</button>
           ) : (
-            <Link to="/login">Login</Link>
+            <Link to="/login">Login/Register</Link>
           )}
         </nav>
       </div>

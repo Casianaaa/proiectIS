@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Client;
+import com.example.demo.model.DTO.ClientRegisterDTO;
 import com.example.demo.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,5 +38,10 @@ public class ClientController {
     @DeleteMapping("/delete/{idClient}")
     public String deleteClient(@PathVariable Integer idClient) {
         return clientService.deleteClient(idClient);
+    }
+
+    @PostMapping("/register")
+    public Client registerClient(@RequestBody ClientRegisterDTO clientRegisterDTO) {
+        return clientService.registerClient(clientRegisterDTO);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.Client;
+import com.example.demo.model.DTO.ClientRegisterDTO;
 import com.example.demo.repository.ClientRepository;
 import com.example.demo.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,19 @@ public class ClientServiceImpl implements ClientService {
     public String deleteClient(Integer idClient) {
         clientRepository.deleteById(idClient);
         return "Client deleted successfully!";
+    }
+
+    @Override
+    public Client registerClient(ClientRegisterDTO clientRegisterDTO) {
+
+        Client client = new Client();
+        client.setEmail(clientRegisterDTO.getEmail());
+        client.setPassword(clientRegisterDTO.getPassword());
+
+        if(clientRepository.findByEmail(clientRegisterDTO.getEmail()) == null) {
+            return clientRepository.save(client);
+        }
+        else
+            return null;
     }
 }

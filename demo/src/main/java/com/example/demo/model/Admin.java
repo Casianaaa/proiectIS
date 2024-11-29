@@ -14,7 +14,7 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_admin")
     private Integer idAdmin;
-    private String parola;
+    private String password;
     private String username;
 
 }

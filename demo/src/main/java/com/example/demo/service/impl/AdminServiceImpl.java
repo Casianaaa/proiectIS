@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.Admin;
+import com.example.demo.model.DTO.AdminLoginDTO;
 import com.example.demo.repository.AdminRepository;
 import com.example.demo.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +42,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Boolean validateAdmin(String username, String parola) {
-        Admin admin = adminRepository.findByUsernameAndParola(username, parola); // Folosește metoda corectă
+    public Boolean validateAdmin(AdminLoginDTO adminLoginDTO) {
+        Admin admin = adminRepository.findByUsernameAndPassword(adminLoginDTO.getUsername(), adminLoginDTO.getPassword()); // Folosește metoda corectă
         return admin != null; // Returnează true dacă admin este găsit
     }
 }

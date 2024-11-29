@@ -13,7 +13,7 @@ const AdminLoginPage = () => {
     // setError(''); // Resetare erori
     const loginData = {
       username: username,
-      parola: password,
+      password: password,
   };
 
   try {
@@ -27,8 +27,6 @@ const AdminLoginPage = () => {
       console.log(response.status);
 
       if (response.ok) {
-        console.log("cev aaaa");
-       
         navigate('/adminHome'); // Redirecționează către pagina admin
       } 
       else {

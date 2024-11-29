@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Admin;
+import com.example.demo.model.DTO.AdminLoginDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,5 +20,5 @@ public interface AdminService {
 
     public String deleteAdmin(Integer idAdmin);
 
-    public Boolean validateAdmin(String username, String parola);
+    public Boolean validateAdmin(AdminLoginDTO adminLoginDTO);
 }

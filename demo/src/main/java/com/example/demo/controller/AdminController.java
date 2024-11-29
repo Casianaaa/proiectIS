@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Admin;
+import com.example.demo.model.DTO.AdminLoginDTO;
 import com.example.demo.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -49,13 +50,13 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginAdmin(@RequestBody Map<String, String> payload) {
+    public ResponseEntity<?> loginAdmin(@RequestBody AdminLoginDTO adminLoginDTO) {
         // Extrage datele din JSON
-        String username = payload.get("username");
-        String parola = payload.get("parola"); // Asigură-te că frontend-ul trimite "parola"
+        //String username = adminLoginDTO.getUsername();
+        //String password = adminLoginDTO.getPassword(); // Asigură-te că frontend-ul trimite "parola"
 
         // Validare
-        boolean isValid = adminService.validateAdmin(username, parola);
+        boolean isValid = adminService.validateAdmin(adminLoginDTO);
 
         if (isValid) {
             return ResponseEntity.ok("Login reușit!");
