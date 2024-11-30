@@ -1,0 +1,10 @@
+CREATE DATABASE proiectis;
+
+
+
+
+
+
+
+
+
