@@ -7,6 +7,7 @@ import TopAttractions from './topAttractions/TopAttractions';
 import About from './about/About';
 import Map from './map/Map';
 import Login from './login/Login';
+import Register from './register/Register';
 import CountyDetail from './counties/CountyDetail';
 import WelcomePage from './welcomePage/WelcomePage';
 import AdminLogin from './adminLogin/AdminLogin'; // Pagina de login pentru admin
@@ -36,7 +37,8 @@ const App = () => {
           <Route path = "/topAttractions" element= {<TopAttractions />} />
           <Route path = "/about" element= {<About />} />
           <Route path = "/map" element= {<Map />} />
-          <Route path = "/login" element = {<Login />} />
+          <Route path = "/register" element = {<Register />} />
+          <Route path="/login" element = {<Login />} />
           <Route path = "/adminLogin" element= {<AdminLogin />} />
           <Route path = "/adminHome" element = {<AdminHome />} />
           <Route path = "/myAccount" element = {<MyAccount />} />

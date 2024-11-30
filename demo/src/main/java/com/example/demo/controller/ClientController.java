@@ -1,13 +1,18 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Client;
+import com.example.demo.model.DTO.AdminLoginDTO;
+import com.example.demo.model.DTO.ClientLoginDTO;
 import com.example.demo.model.DTO.ClientRegisterDTO;
 import com.example.demo.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173") // Permite accesul din frontend
 @RestController
 @RequestMapping("/clients")
 public class ClientController {
@@ -41,7 +46,30 @@ public class ClientController {
     }
 
     @PostMapping("/register")
-    public Client registerClient(@RequestBody ClientRegisterDTO clientRegisterDTO) {
-        return clientService.registerClient(clientRegisterDTO);
+    public ResponseEntity<?> registerClient(@RequestBody ClientRegisterDTO clientRegisterDTO) {
+        Client existingClient = clientService.getClientByEmail(clientRegisterDTO.getEmail());
+        if (existingClient != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already in use");
+        }
+
+        Client newClient = clientService.registerClient(clientRegisterDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newClient);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginAdmin(@RequestBody ClientLoginDTO clientLoginDTO) {
+        // Extrage datele din JSON
+        //String username = adminLoginDTO.getUsername();
+        //String password = adminLoginDTO.getPassword(); // Asigură-te că frontend-ul trimite "parola"
+
+        // Validare
+        boolean isValid = clientService.validateClient(clientLoginDTO);
+
+        if (isValid) {
+            return ResponseEntity.ok("Login reușit!");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Username sau parolă incorecte");
+        }
     }
 }

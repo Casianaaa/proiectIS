@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.Client;
+import com.example.demo.model.DTO.ClientLoginDTO;
 import com.example.demo.model.DTO.ClientRegisterDTO;
 import com.example.demo.repository.ClientRepository;
 import com.example.demo.service.ClientService;
@@ -27,7 +28,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client getClientById(Integer idClient) {
-        return clientRepository.findById(idClient).get();
+        return clientRepository.findById(idClient).orElse(null);
     }
 
     @Override
@@ -43,15 +44,21 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client registerClient(ClientRegisterDTO clientRegisterDTO) {
-
         Client client = new Client();
         client.setEmail(clientRegisterDTO.getEmail());
         client.setPassword(clientRegisterDTO.getPassword());
 
-        if(clientRepository.findByEmail(clientRegisterDTO.getEmail()) == null) {
-            return clientRepository.save(client);
-        }
-        else
-            return null;
+        return clientRepository.save(client);
+    }
+
+    @Override
+    public Client getClientByEmail(String email) {
+        return clientRepository.findByEmail(email);
+    }
+
+    @Override
+    public Boolean validateClient(ClientLoginDTO clientLoginDTO) {
+        Client client = clientRepository.findByEmailAndPassword(clientLoginDTO.getEmail(), clientLoginDTO.getPassword());
+        return client != null;
     }
 }
