@@ -21,8 +21,10 @@ import CountiesLog from './countiesLog/CountiesLog';
 import CountyAttr from './countyAttr/CountyAttr';
 
 import AddAtraction from './manageAttraction/AddAtraction';
-import EditAttraction from './manageAttraction/EditAttraction';
+import EditAttractions from './manageAttraction/EditAttraction';
 import DeleteAttraction from './manageAttraction/DeleteAttraction';
+import CountiesEdit from './countiesEditpg/CountiesEdit';
+import AttractionsByCounty from './countiesEditpg/AttractionsByCounty';
 
 const App = () => {
   
@@ -50,7 +52,9 @@ const App = () => {
           <Route path="/county-attractions" element={<CountyAttr />} />
           
            <Route path="/manage-attractions/add" element={<AddAtraction />} />
-           <Route path="/manage-attractions/edit" element={<EditAttraction />} />
+           <Route path="/counties-edit" element={<CountiesEdit />} />
+           <Route path="/manage-attractions/edit/:countyName" element={<AttractionsByCounty />} />
+        <Route path="/manage-attractions/edit/:countyName/:attractionId" element={<EditAttractions />} />
            <Route path="/manage-attractions/delete" element={<DeleteAttraction />} />
           
         </Routes>

@@ -14,7 +14,7 @@ const AdminHome = () => {
   };
 
   const handleEditClick = () => {
-    navigate('/manage-attractions/edit');
+    navigate('/counties-edit'); // Redirecționează la pagina de editare județe
   };
 
   const handleDeleteClick = () => {

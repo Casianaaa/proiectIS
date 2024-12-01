@@ -1,108 +1,109 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import './editAttraction.css';
 
-const EditAttraction = ({ attractionId, onSave }) => {
-  const [attraction, setAttraction] = useState({
-    name: '',
-    description: '',
-    latitude: '',
-    longitude: '',
-    image: null,
-  });
+const EditAttractions = () => {
+  const { countyName } = useParams(); // Obține numele județului din URL
+  const [attractions, setAttractions] = useState([]);
+  const [editAttraction, setEditAttraction] = useState(null);
 
-  // Simulează preluarea datelor atracției dintr-un API
   useEffect(() => {
-    // Fetch the attraction details (simulate with hardcoded data or an API call)
-    const fetchAttraction = async () => {
-      const data = {
-        name: 'Peleș Castle',
-        description: 'A beautiful castle in Sinaia, Romania.',
-        latitude: '45.3591',
-        longitude: '25.5421',
-        image: null,
-      };
-      setAttraction(data);
+    // Fetch atracțiile din județ (exemplu API)
+    const fetchAttractions = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/attractions/${countyName}`);
+        const data = await response.json();
+        setAttractions(data);
+      } catch (error) {
+        console.error('Eroare la obținerea atracțiilor:', error);
+      }
     };
 
-    fetchAttraction();
-  }, [attractionId]);
+    fetchAttractions();
+  }, [countyName]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setAttraction((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleEditClick = (attraction) => {
+    setEditAttraction(attraction);
   };
 
-  const handleImageChange = (e) => {
-    setAttraction((prev) => ({
-      ...prev,
-      image: e.target.files[0],
-    }));
-  };
+  const handleSave = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/attractions/${editAttraction.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editAttraction),
+      });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Trimite datele modificate către backend sau API
-    console.log('Updated Attraction:', attraction);
-    onSave(attraction); // Callback pentru a salva modificările
+      if (response.ok) {
+        alert('Atracție actualizată cu succes!');
+        setEditAttraction(null);
+        const updatedAttractions = await fetch(
+          `http://localhost:8080/attractions/${countyName}`
+        ).then((res) => res.json());
+        setAttractions(updatedAttractions);
+      }
+    } catch (error) {
+      console.error('Eroare la actualizarea atracției:', error);
+    }
   };
 
   return (
-    <div className="edit-attraction-container">
-      <h2>Edit Attraction</h2>
-      <form className="edit-attraction-form" onSubmit={handleSubmit}>
-        <label htmlFor="name">Attraction Name:</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={attraction.name}
-          onChange={handleChange}
-          placeholder="Enter attraction name"
-        />
-
-        <label htmlFor="description">Description:</label>
-        <textarea
-          id="description"
-          name="description"
-          value={attraction.description}
-          onChange={handleChange}
-          placeholder="Enter attraction description"
-        ></textarea>
-
-        <label htmlFor="latitude">Latitude:</label>
-        <input
-          type="text"
-          id="latitude"
-          name="latitude"
-          value={attraction.latitude}
-          onChange={handleChange}
-          placeholder="Enter latitude"
-        />
-
-        <label htmlFor="longitude">Longitude:</label>
-        <input
-          type="text"
-          id="longitude"
-          name="longitude"
-          value={attraction.longitude}
-          onChange={handleChange}
-          placeholder="Enter longitude"
-        />
-
-        <label htmlFor="image">Upload Image:</label>
-        <input
-          type="file"
-          id="image"
-          name="image"
-          onChange={handleImageChange}
-        />
-
-        <button type="submit">Save Changes</button>
-      </form>
+    <div className="edit-attractions-container">
+      <h2>Atracții în județul {countyName}</h2>
+      {attractions.length === 0 ? (
+        <p className="no-attractions-message">
+          Nu există atracții disponibile pentru județul {countyName}. Adaugă unele atracții pentru a începe!
+        </p>
+      ) : !editAttraction ? (
+        <ul className="attractions-list">
+          {attractions.map((attraction) => (
+            <li key={attraction.id} className="attraction-item">
+              <h3>{attraction.name}</h3>
+              <p>{attraction.description}</p>
+              <img src={attraction.imageUrl} alt={attraction.name} />
+              <button onClick={() => handleEditClick(attraction)}>Edit</button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="edit-form">
+          <h3>Editare Atracție</h3>
+          <label>
+            Nume:
+            <input
+              type="text"
+              value={editAttraction.name}
+              onChange={(e) =>
+                setEditAttraction({ ...editAttraction, name: e.target.value })
+              }
+            />
+          </label>
+          <label>
+            Descriere:
+            <textarea
+              value={editAttraction.description}
+              onChange={(e) =>
+                setEditAttraction({ ...editAttraction, description: e.target.value })
+              }
+            />
+          </label>
+          <label>
+            Imagine URL:
+            <input
+              type="text"
+              value={editAttraction.imageUrl}
+              onChange={(e) =>
+                setEditAttraction({ ...editAttraction, imageUrl: e.target.value })
+              }
+            />
+          </label>
+          <button onClick={handleSave}>Salvează</button>
+          <button onClick={() => setEditAttraction(null)}>Anulează</button>
+        </div>
+      )}
     </div>
   );
+  
 };
 
-export default EditAttraction;
+export default EditAttractions;
