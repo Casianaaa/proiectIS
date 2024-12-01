@@ -6,6 +6,7 @@ const AddAttraction = () => {
   const [description, setDescription] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
+  const [county, setCounty] = useState('');
   const [image, setImage] = useState(null);
   const [attractions, setAttractions] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
@@ -15,7 +16,7 @@ const AddAttraction = () => {
   useEffect(() => {
     const fetchAttractions = async () => {
       try {
-        const response = await fetch('http://localhost:5000/attractions');
+        const response = await fetch('http://localhost:8080/attractions');
         const data = await response.json();
         setAttractions(data);
       } catch (error) {
@@ -34,12 +35,13 @@ const AddAttraction = () => {
     formData.append('description', description);
     formData.append('latitude', latitude);
     formData.append('longitude', longitude);
+    formData.append('county', county);
     if (image) formData.append('image', image);
 
     try {
       const url = isEditing
-        ? `http://localhost:5000/attractions/${currentAttraction.id}`
-        : 'http://localhost:5000/attractions';
+        ? `http://localhost:8080/attractions/${currentAttraction.id}`
+        : 'http://localhost:8080/attractions';
       const method = isEditing ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
@@ -49,7 +51,7 @@ const AddAttraction = () => {
 
       if (response.ok) {
         alert(isEditing ? 'Attraction updated successfully!' : 'Attraction added successfully!');
-        const updatedAttractions = await fetch('http://localhost:5000/attractions').then((res) =>
+        const updatedAttractions = await fetch('http://localhost:8080/attractions').then((res) =>
           res.json()
         );
         setAttractions(updatedAttractions);
@@ -57,6 +59,7 @@ const AddAttraction = () => {
         setDescription('');
         setLatitude('');
         setLongitude('');
+        setCounty('');
         setImage(null);
         setIsEditing(false);
         setCurrentAttraction(null);
@@ -72,6 +75,7 @@ const AddAttraction = () => {
     setDescription(attraction.description);
     setLatitude(attraction.coordinates[0]);
     setLongitude(attraction.coordinates[1]);
+    setCounty(attraction.county);
     setIsEditing(true);
     setCurrentAttraction(attraction);
   };
@@ -79,7 +83,7 @@ const AddAttraction = () => {
   // Handle delete
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/attractions/${id}`, { method: 'DELETE' });
+      const response = await fetch(`http://localhost:8080/attractions/${id}`, { method: 'DELETE' });
       if (response.ok) {
         alert('Attraction deleted successfully!');
         setAttractions(attractions.filter((attraction) => attraction.id !== id));
@@ -126,6 +130,14 @@ const AddAttraction = () => {
           onChange={(e) => setLongitude(e.target.value)}
           required
         />
+        <label>County (Județ):</label>
+        <input
+          type="text"
+          placeholder="Enter county name"
+          value={county}
+          onChange={(e) => setCounty(e.target.value)}
+          required
+        />
         <label>Upload Image:</label>
         <input
           type="file"
@@ -141,10 +153,11 @@ const AddAttraction = () => {
           <li key={attraction.id}>
             <div>
               <h3>{attraction.name}</h3>
+              <p><strong>County (Județ):</strong> {attraction.county}</p>
               <p>{attraction.description}</p>
               {attraction.imageUrl && (
                 <img
-                  src={`http://localhost:5000/uploads/${attraction.imageUrl}`}
+                  src={`http://localhost:8080/uploads/${attraction.imageUrl}`}
                   alt={attraction.name}
                 />
               )}
