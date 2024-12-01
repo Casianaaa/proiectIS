@@ -8,7 +8,7 @@ const DeleteAttraction = () => {
   useEffect(() => {
     const fetchAttractions = async () => {
       try {
-        const response = await fetch('http://localhost:5000/attractions');
+        const response = await fetch('http://localhost:8080/attractions');
         const data = await response.json();
         setAttractions(data);
       } catch (error) {
@@ -22,7 +22,7 @@ const DeleteAttraction = () => {
   // Handle delete
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/attractions/${id}`, {
+      const response = await fetch(`http://localhost:8080/attractions/${id}`, {
         method: 'DELETE',
       });
       if (response.ok) {
@@ -42,19 +42,26 @@ const DeleteAttraction = () => {
       ) : (
         <ul className="attractions-list">
           {attractions.map((attraction) => (
-            <li key={attraction.id}>
+            <li key={attraction.id} className="attraction-item">
               <div>
                 <h3>{attraction.name}</h3>
+                <p>
+                  <strong>County:</strong> {attraction.countyName}
+                </p>
                 <p>{attraction.description}</p>
                 {attraction.imageUrl && (
                   <img
-                    src={`http://localhost:5000/uploads/${attraction.imageUrl}`}
+                    src={`http://localhost:8080/uploads/${attraction.imageUrl}`}
                     alt={attraction.name}
+                    className="attraction-image"
                   />
                 )}
-                <p>
-                  <strong>Location:</strong> {attraction.coordinates[0]}, {attraction.coordinates[1]}
-                </p>
+                {attraction.coordinates && (
+                  <p>
+                    <strong>Location:</strong> {attraction.coordinates[0]},{' '}
+                    {attraction.coordinates[1]}
+                  </p>
+                )}
               </div>
               <button
                 className="delete-button"
