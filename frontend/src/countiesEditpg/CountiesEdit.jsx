@@ -100,7 +100,7 @@ const CountiesEdit = () => {
   
     return (
         <div className="counties-container">
-          <h2>Județele României</h2>
+          <h2>Editeaza judetele Romaniei</h2>
           <div className="counties-list">
             {countiesData.map((county, index) => (
               <div
