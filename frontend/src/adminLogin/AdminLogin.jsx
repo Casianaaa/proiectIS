@@ -24,7 +24,7 @@ const AdminLoginPage = () => {
           },
           body: JSON.stringify(loginData),
       });
-      console.log(response.status);
+      //console.log(response.status);
 
       if (response.ok) {
         navigate('/adminHome'); // Redirecționează către pagina admin

@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.DTO.TouristAttractionDTO;
 import com.example.demo.model.TouristAttraction;
 import com.example.demo.service.TouristAttractionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,9 +26,28 @@ public class TouristAttractionController {
         return touristAttractionService.getAttractionById(idAttraction);
     }
 
+    @GetMapping("/county/{locationName}")
+    public ResponseEntity<List<TouristAttraction>> getAttractionsByCounty(@PathVariable String locationName) {
+        List<TouristAttraction> attractions = touristAttractionService.getAttractionsByLocation(locationName);
+        if (attractions.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(attractions);
+    }
+
     @PostMapping("/store")
-    public TouristAttraction saveAttraction(@RequestBody TouristAttraction attraction) {
-        return touristAttractionService.create(attraction);
+    public ResponseEntity<?> saveAttraction(@RequestBody TouristAttractionDTO touristAttractionDTO) {
+        TouristAttraction existingTouristAttraction = touristAttractionService.getAttractionByNameLatitudeLongitude(
+                touristAttractionDTO.getName(),
+                touristAttractionDTO.getLatitude(),
+                touristAttractionDTO.getLongitude()
+        );
+        if (existingTouristAttraction != null) {
+            return ResponseEntity.status(409).body("Attraction already exists!");
+        }
+
+        TouristAttraction newTouristAttraction = touristAttractionService.saveAttraction(touristAttractionDTO);
+        return ResponseEntity.status(201).body(newTouristAttraction);
     }
 
     @PutMapping("/update")
@@ -38,4 +59,5 @@ public class TouristAttractionController {
     public String deleteAttraction(@PathVariable Integer idAttraction) {
         return touristAttractionService.deleteAttraction(idAttraction);
     }
+
 }
