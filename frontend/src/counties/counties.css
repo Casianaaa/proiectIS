@@ -4,7 +4,7 @@
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  padding-top: 180px; /* Ajustează această valoare în funcție de înălțimea header-ului */
+  margin-top: 80px; /* Ajustează pentru înălțimea header-ului */
   background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
 }
 
@@ -40,16 +40,14 @@
   text-align: center;
   text-decoration: none;
   display: block;
-  transition: background-color 0.3s ease, font-size 0.3s ease; /* Tranziție pentru fundal și dimensiunea fontului */
+  transition: background-color 0.3s ease, font-size 0.3s ease;
 }
 
-/* Efect de hover pe link */
 .county:hover a {
-  background-color: rgba(0, 0, 0, 0.8); /* fundal mai opac la hover */
-  font-size: 1.3rem; /* Mărire ușoară a textului la hover */
+  background-color: rgba(0, 0, 0, 0.8);
+  font-size: 1.3rem;
 }
 
-/* Animație la hover pentru întreaga secțiune */
 .county:hover {
   transform: scale(1.05);
 }

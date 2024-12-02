@@ -1,6 +1,6 @@
 /* Containerul general */
 .county-detail-container {
-    padding: 180px;
+    padding: 60px;
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
     color: #333;
@@ -9,22 +9,23 @@
 /* Titlul principal */
 .county-detail-container h2 {
     text-align: center;
-    font-size: 2em;
+    font-size: 2.5em; /* Crește dimensiunea titlului */
     color: #000000;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 /* Cardurile pentru fiecare atracție */
 .attraction-card {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr; /* Stânga: imagine și titlu, mijloc: descriere, dreapta: radio buttons */
-    gap: 20px;
-    margin: 20px auto;
-    padding: 20px;
+    gap: 30px; /* Crește spațiul între coloane */
+    margin: 30px auto;
+    padding: 30px; /* Crește padding-ul intern al cardului */
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 1200px;
+    border-radius: 10px; /* Ușor mai rotunjit */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Crește umbra */
+    max-width: 1200px; /* Lărgește dimensiunea maximă a cardului */
+    width: 90%; /* Asigură că se adaptează la ecrane mici */
     align-items: center; /* Aliniază vertical elementele din fiecare coloană */
 }
 
@@ -33,53 +34,52 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
     margin-top: -10px; /* Mută titlul și imaginea mai sus */
 }
 
 .attraction-image {
     width: 100%;
-    max-width: 200px; /* Crește dimensiunea imaginii */
-    height: 150px; /* Crește înălțimea imaginii */
+    max-width: 250px; /* Crește dimensiunea imaginii */
+    height: 180px; /* Crește înălțimea imaginii */
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 8px; /* Ușor mai rotunjit */
 }
 
 .attraction-image-container h3 {
-    font-size: 1.5em; /* Crește dimensiunea fontului titlului */
+    font-size: 1.8em; /* Crește dimensiunea fontului titlului */
     color: #333;
     text-align: center;
-    margin-bottom: 5px; /* Mută titlul mai aproape de imagine */
+    margin-bottom: 10px; /* Adaugă spațiu între imagine și titlu */
 }
 
 /* Descrierea atracției */
 .attraction-description {
-    font-size: 1em;
-    color: #666;
-    line-height: 1.5;
+    font-size: 1.1em; /* Crește dimensiunea textului */
+    color: #555; /* Ușor mai închis pentru contrast */
+    line-height: 1.8; /* Îmbunătățește lizibilitatea */
     text-align: left;
     align-self: center;
-    margin-top: 0; /* Elimină mutarea în sus */
-    padding: 0 10px; /* Adaugă spațiu lateral dacă este necesar */
+    margin-top: 0;
+    padding: 0 20px; /* Adaugă mai mult spațiu lateral */
 }
-
 
 /* Opțiunile de tip radio */
 .radio-options {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px; /* Crește spațiul între opțiuni */
     align-items: flex-start;
-    justify-self: center; /* Centrare în grilă */
+    justify-self: center;
     text-align: right;
 }
 
 .radio-options label {
-    font-size: 0.9em;
+    font-size: 1em; /* Crește dimensiunea textului pentru radio */
 }
 
 .radio-options input {
-    margin-right: 5px;
+    margin-right: 8px; /* Crește spațiul dintre buton și text */
 }
 
 /* Responsivitate */
@@ -87,6 +87,7 @@
     .attraction-card {
         grid-template-columns: 1fr; /* Pe mobil, afișează elementele pe coloane */
         text-align: center;
+        padding: 20px; /* Reduce padding-ul pe ecrane mici */
     }
 
     .radio-options {
@@ -94,7 +95,11 @@
     }
 
     .attraction-image {
-        max-width: 150px;
+        max-width: 200px; /* Reduce dimensiunea imaginii pe ecrane mici */
         height: auto;
+    }
+
+    .attraction-description {
+        padding: 0 10px; /* Reduce padding-ul lateral */
     }
 }
