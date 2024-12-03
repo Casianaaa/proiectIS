@@ -21,7 +21,8 @@ const MaybeShowHeader = ({ children }) => {
       //location.pathname === '/counties' ||
       //location.pathname === '/county/Alba' ||
       //location.pathname === '/myAccount' ||
-      location.pathname.includes('/manage-attractions/edit/') // Se ascunde header-ul dacă URL-ul conține /manage-attractions/edit/
+      location.pathname.includes('/manage-attractions/edit/')|| // Se ascunde header-ul dacă URL-ul conține /manage-attractions/edit/
+      location.pathname.includes('/manage-attractions/delete/') // Se ascunde header-ul dacă URL-ul conține /manage-attractions/edit/
     ) {
       setShowHeader(false); // Nu afișa header-ul pe aceste pagini
     } else {

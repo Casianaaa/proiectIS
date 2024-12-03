@@ -49,6 +49,11 @@
     cursor: pointer;
     font-size: 16px;
   }
+
+  .attraction-form input[readonly] {
+    background-color: #e9ecef; /* Culori mai deschise pentru a arăta că este nemodificabil */
+    cursor: not-allowed; /* Indică faptul că nu poate fi modificat */
+  }
   
   /* Efect de hover pentru buton */
   .attraction-form button:hover {

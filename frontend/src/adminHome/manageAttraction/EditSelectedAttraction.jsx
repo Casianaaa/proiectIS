@@ -24,7 +24,7 @@ const EditSelectedAttraction = () => {
           setDescription(data.description);
           setLatitude(data.latitude);
           setLongitude(data.longitude);
-          setLocation(data.location);
+          setLocation(data.location); // Setezi locația
           setImage(data.image);
         }
       } catch (error) {
@@ -37,16 +37,16 @@ const EditSelectedAttraction = () => {
 
   const handleEditAttraction = async (e) => {
     e.preventDefault();
-
+  
     const attractionData = {
       name,
-      location,
+      location, // Locația rămâne aceeași
       description,
       latitude: parseFloat(latitude),
       longitude: parseFloat(longitude),
       image,
     };
-
+  
     try {
       const response = await fetch(`http://localhost:8080/attractions/update/${id}`, {
         method: 'PUT',
@@ -55,10 +55,11 @@ const EditSelectedAttraction = () => {
         },
         body: JSON.stringify(attractionData),
       });
-
+  
       if (response.ok) {
         setSuccess('Attraction updated successfully!');
         setError('');
+        //navigate(`/attractions/${id}`);  // Navighează utilizatorul înapoi la pagina atracției actualizate
       } else {
         const data = await response.json();
         setError(data.message || 'Failed to update attraction.');
@@ -112,16 +113,12 @@ const EditSelectedAttraction = () => {
           required
         />
         <label>County (Județ):</label>
-        <select
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          required
-        >
-          <option value="" disabled>
-            Select a county
-          </option>
-          {/* Add the counties here */}
-        </select>
+        {/* Afișezi locația dar nu o poți modifica */}
+        <input 
+          type="text" 
+          value={location} 
+          readOnly 
+        />
         <label>Image URL:</label>
         <input
           type="text"

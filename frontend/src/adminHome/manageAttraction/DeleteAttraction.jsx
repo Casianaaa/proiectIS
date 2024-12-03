@@ -1,71 +1,65 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import './deleteAttraction.css';
 
+const countiesData = [
+  { name: 'Alba' },
+  { name: 'Arad' },
+  { name: 'Argeș' },
+  { name: 'Bacău' },
+  { name: 'Bihor' },
+  { name: 'Bistrița-Năsăud' },
+  { name: 'Botoșani' },
+  { name: 'Brăila' },
+  { name: 'Brașov' },
+  { name: 'București' },
+  { name: 'Buzău' },
+  { name: 'Călărași' },
+  { name: 'Caraș-Severin' },
+  { name: 'Cluj' },
+  { name: 'Constanța' },
+  { name: 'Covasna' },
+  { name: 'Dâmbovița' },
+  { name: 'Dolj' },
+  { name: 'Galați' },
+  { name: 'Giurgiu' },
+  { name: 'Gorj' },
+  { name: 'Harghita' },
+  { name: 'Hunedoara' },
+  { name: 'Ialomița' },
+  { name: 'Iași' },
+  { name: 'Ilfov' },
+  { name: 'Maramureș' },
+  { name: 'Mehedinți' },
+  { name: 'Mureș' },
+  { name: 'Neamț' },
+  { name: 'Olt' },
+  { name: 'Prahova' },
+  { name: 'Sălaj' },
+  { name: 'Satu Mare' },
+  { name: 'Sibiu' },
+  { name: 'Suceava' },
+  { name: 'Teleorman' },
+  { name: 'Timiș' },
+  { name: 'Tulcea' },
+  { name: 'Vâlcea' },
+  { name: 'Vaslui' },
+  { name: 'Vrancea' }
+];
+
 const DeleteAttraction = () => {
-  const [attractions, setAttractions] = useState([]);
-
-  // Fetch existing attractions
-  useEffect(() => {
-    const fetchAttractions = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/attractions');
-        const data = await response.json();
-        setAttractions(data);
-      } catch (error) {
-        console.error('Error fetching attractions:', error);
-      }
-    };
-
-    fetchAttractions();
-  }, []);
-
-  // Handle delete
-  const handleDelete = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:8080/attractions/${id}`, {
-        method: 'DELETE',
-      });
-      if (response.ok) {
-        alert('Attraction deleted successfully!');
-        setAttractions(attractions.filter((attraction) => attraction.idAttraction !== id));
-      } else {
-        const message = await response.text();
-        alert(`Failed to delete: ${message}`);
-      }
-    } catch (error) {
-      console.error('Error deleting attraction:', error);
-    }
-  };
-
   return (
-    <div className="delete-attraction-container">
-      <h2>Delete Attractions</h2>
-      {attractions.length === 0 ? (
-        <p>No attractions available.</p>
+    <div className="edit-counties-container">
+      <h2>Lista județelor</h2>
+      {countiesData.length === 0 ? (
+        <p>No counties available.</p>
       ) : (
-        <ul className="attractions-list">
-          {attractions.map((attraction) => (
-            <li key={attraction.idAttraction} className="attraction-item">
-              <div>
-                <h3>{attraction.name}</h3>
-                <p>
-                  <strong>County:</strong> {attraction.location}
-                </p>
-                <p>{attraction.description}</p>
-                {attraction.image && (
-                  <img
-                    src={attraction.image}
-                    alt={attraction.name}
-                    className="attraction-image"
-                  />
-                )}
-              </div>
-              <button
-                className="delete-button"
-                onClick={() => handleDelete(attraction.idAttraction)}
-              >
-                Delete
-              </button>
+        <ul className="counties-list">
+          {countiesData.map((county, index) => (
+            <li key={index} className="county-item">
+              <Link to={`/manage-attractions/delete/${county.name}`} className="county-link">
+                {county.name}
+              </Link>
             </li>
           ))}
         </ul>

@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './editCountyAttractions.css';
 
 const EditCountyAttractions = () => {
+  const { locationName } = useParams();  // Obține județul din URL
   const navigate = useNavigate();
   const [attractions, setAttractions] = useState([]);
 
   useEffect(() => {
     const fetchAttractions = async () => {
       try {
-        const response = await fetch('http://localhost:8080/attractions');
+        // Modificăm cererea pentru a include județul în URL
+        const response = await fetch(`http://localhost:8080/attractions/county/${locationName}`);
         const data = await response.json();
-        setAttractions(data);
+        setAttractions(data);  // Stocăm atracțiile pentru județul respectiv
       } catch (error) {
         console.error('Error fetching attractions:', error);
       }
     };
 
-    fetchAttractions();
-  }, []);
+    // Se apelează fetchAttractions doar când județul este definit
+    if (locationName) {
+      fetchAttractions();
+    }
+  }, [locationName]);  // Reexecutăm când `locationName` se schimbă
 
   const handleEdit = (id, locationName) => {
     navigate(`/manage-attractions/edit/${locationName}/${id}`);
@@ -26,9 +31,9 @@ const EditCountyAttractions = () => {
 
   return (
     <div className="edit-attraction-container">
-      <h2>Edit Attractions</h2>
+      <h2>Atracții turistice din județul {locationName}</h2>
       {attractions.length === 0 ? (
-        <p>No attractions available.</p>
+        <p>Nu sunt atracții disponibile pentru acest județ.</p>
       ) : (
         <ul className="attractions-list">
           {attractions.map((attraction) => (

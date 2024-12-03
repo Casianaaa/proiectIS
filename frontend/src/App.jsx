@@ -23,6 +23,7 @@ import DeleteAttraction from './adminHome/manageAttraction/DeleteAttraction';
 import EditAttraction from './adminHome/manageAttraction/EditAttraction'; 
 import EditCountyAttractions from './adminHome/manageAttraction/EditCountyAttractions'; 
 import EditSelectedAttraction from './adminHome/manageAttraction/EditSelectedAttraction';
+import DeleteCountyAttractions from './adminHome/manageAttraction/DeleteCountyAttractions';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -68,6 +69,7 @@ const App = () => {
 
           <Route path="/manage-attractions/add" element={<AddAtraction />} />
           <Route path="/manage-attractions/delete" element={<DeleteAttraction />} />
+          <Route path="/manage-attractions/delete/:locationName" element={<DeleteCountyAttractions />} />
 
           {/* Rutele pentru editare județe și atracții */}
           <Route path="/manage-attractions/edit" element={<EditAttraction />} />
