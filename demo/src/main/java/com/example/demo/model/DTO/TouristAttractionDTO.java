@@ -12,4 +12,5 @@ public class TouristAttractionDTO {
     private String description;
     private Double latitude; // Adăugăm latitudine
     private Double longitude; // Adăugăm longitudine
+    private String image;
 }

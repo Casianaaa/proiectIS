@@ -12,7 +12,7 @@ public interface TouristAttractionService {
     public TouristAttraction getAttractionById(Integer idAttraction);
     public TouristAttraction getAttractionByNameLatitudeLongitude(String name, double latitude, double longitude);
     public TouristAttraction update(TouristAttraction attraction);
-    public String deleteAttraction(Integer idAttraction);
+    public Boolean deleteAttraction(Integer idAttraction);
     public Boolean existsByNameOrCoordinates(TouristAttractionDTO touristAttractionDTO);
 
     // Metodă pentru a obține atracțiile turistice pe județ

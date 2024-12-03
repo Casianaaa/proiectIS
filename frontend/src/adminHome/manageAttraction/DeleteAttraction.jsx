@@ -27,7 +27,10 @@ const DeleteAttraction = () => {
       });
       if (response.ok) {
         alert('Attraction deleted successfully!');
-        setAttractions(attractions.filter((attraction) => attraction.id !== id));
+        setAttractions(attractions.filter((attraction) => attraction.idAttraction !== id));
+      } else {
+        const message = await response.text();
+        alert(`Failed to delete: ${message}`);
       }
     } catch (error) {
       console.error('Error deleting attraction:', error);
@@ -42,30 +45,24 @@ const DeleteAttraction = () => {
       ) : (
         <ul className="attractions-list">
           {attractions.map((attraction) => (
-            <li key={attraction.id} className="attraction-item">
+            <li key={attraction.idAttraction} className="attraction-item">
               <div>
                 <h3>{attraction.name}</h3>
                 <p>
-                  <strong>County:</strong> {attraction.countyName}
+                  <strong>County:</strong> {attraction.location}
                 </p>
                 <p>{attraction.description}</p>
-                {attraction.imageUrl && (
+                {attraction.image && (
                   <img
-                    src={`http://localhost:8080/uploads/${attraction.imageUrl}`}
+                    src={attraction.image}
                     alt={attraction.name}
                     className="attraction-image"
                   />
                 )}
-                {attraction.coordinates && (
-                  <p>
-                    <strong>Location:</strong> {attraction.coordinates[0]},{' '}
-                    {attraction.coordinates[1]}
-                  </p>
-                )}
               </div>
               <button
                 className="delete-button"
-                onClick={() => handleDelete(attraction.id)}
+                onClick={() => handleDelete(attraction.idAttraction)}
               >
                 Delete
               </button>

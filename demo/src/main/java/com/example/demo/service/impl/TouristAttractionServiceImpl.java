@@ -29,6 +29,7 @@ public class TouristAttractionServiceImpl implements TouristAttractionService {
         touristAttraction.setDescription(touristAttractionDTO.getDescription());
         touristAttraction.setLatitude(touristAttractionDTO.getLatitude());
         touristAttraction.setLongitude(touristAttractionDTO.getLongitude());
+        touristAttraction.setImage(touristAttractionDTO.getImage());
 
         return attractionRepository.save(touristAttraction);
     }
@@ -54,9 +55,12 @@ public class TouristAttractionServiceImpl implements TouristAttractionService {
     }
 
     @Override
-    public String deleteAttraction(Integer idAttraction) {
-        attractionRepository.deleteById(idAttraction);
-        return "Tourist Attraction deleted successfully!";
+    public Boolean deleteAttraction(Integer idAttraction) {
+        if (attractionRepository.existsById(idAttraction)) {
+            attractionRepository.deleteById(idAttraction);
+            return true;
+        }
+        return false;
     }
 
     @Override

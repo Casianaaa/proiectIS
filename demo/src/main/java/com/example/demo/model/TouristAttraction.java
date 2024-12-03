@@ -24,6 +24,8 @@ public class TouristAttraction {
     private Double latitude;
     private Double longitude;
 
+    private String image;
+
     @OneToMany(mappedBy = "touristAttraction", cascade = CascadeType.ALL)
     private List<NotVisit> visits;
 

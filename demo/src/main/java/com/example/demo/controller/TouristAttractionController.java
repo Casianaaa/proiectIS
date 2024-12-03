@@ -55,9 +55,14 @@ public class TouristAttractionController {
         return touristAttractionService.update(attraction);
     }
 
-    @DeleteMapping("/delete/{idAttraction}")
-    public String deleteAttraction(@PathVariable Integer idAttraction) {
-        return touristAttractionService.deleteAttraction(idAttraction);
+    @DeleteMapping("/{idAttraction}")
+    public ResponseEntity<String> deleteAttraction(@PathVariable Integer idAttraction) {
+        boolean isDeleted = touristAttractionService.deleteAttraction(idAttraction);
+        if (isDeleted) {
+            return ResponseEntity.ok("Tourist Attraction deleted successfully!");
+        } else {
+            return ResponseEntity.status(404).body("Attraction not found.");
+        }
     }
 
 }

@@ -7,11 +7,10 @@ const AddAttraction = () => {
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
   const [location, setLocation] = useState('');
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(''); // Înlocuim cu URL-ul imaginii
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  // Lista cu județe și București
   const counties = [
     'București',
     'Alba',
@@ -59,15 +58,16 @@ const AddAttraction = () => {
 
   const handleAddAttraction = async (e) => {
     e.preventDefault();
-  
+
     const attractionData = {
-      name: name,
-      location: location, // Adaugăm județul selectat
-      description: description, // Adaugăm descrierea
+      name,
+      location,
+      description,
       latitude: parseFloat(latitude),
-      longitude: parseFloat(longitude)
+      longitude: parseFloat(longitude),
+      image, // Trimitem URL-ul imaginii
     };
-  
+
     try {
       const response = await fetch('http://localhost:8080/attractions/store', {
         method: 'POST',
@@ -76,7 +76,7 @@ const AddAttraction = () => {
         },
         body: JSON.stringify(attractionData),
       });
-  
+
       if (response.ok) {
         setSuccess('Atractie adaugata cu succes!');
         setError('');
@@ -85,7 +85,7 @@ const AddAttraction = () => {
         setDescription('');
         setLatitude('');
         setLongitude('');
-        setImage(null);
+        setImage(''); // Resetăm URL-ul
       } else if (response.status === 409) {
         setError('Atractia deja exista!');
         setSuccess('');
@@ -104,10 +104,7 @@ const AddAttraction = () => {
     <div className="add-attraction-container">
       <h2>Add New Attraction</h2>
 
-      {/* Afișare mesaj eroare */}
       {error && <div className="error">{error}</div>}
-
-      {/* Afișare mesaj succes */}
       {success && <div className="success">{success}</div>}
 
       <form onSubmit={handleAddAttraction} className="attraction-form">
@@ -159,11 +156,12 @@ const AddAttraction = () => {
             </option>
           ))}
         </select>
-        <label>Upload Image:</label>
+        <label>Image URL:</label>
         <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setImage(e.target.files[0])}
+          type="text"
+          placeholder="Enter image URL"
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
         />
         <button type="submit">Add Attraction</button>
       </form>

@@ -14,16 +14,24 @@ const Header = ({ isAuthenticated, onLogout }) => {
         </nav>
 
         <div className="logo">
-          <img src={logo} alt="România Noastră" />
+          <Link to="/">
+            <img src={logo} alt="România Noastră" />
+          </Link>
         </div>
 
         <nav className="right-links">
           <Link to="/map">Hartă</Link>
           <Link to="/about">Despre</Link>
           {isAuthenticated ? (
-            <button onClick={onLogout}>Logout</button>
+            <>
+              <Link to="/myAccount">My Account</Link>
+              <button onClick={onLogout}>Logout</button>
+            </>
           ) : (
-            <Link to="/register">Login/Register</Link>
+            <>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+            </>
           )}
         </nav>
       </div>

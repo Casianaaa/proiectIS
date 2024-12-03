@@ -17,16 +17,16 @@
 /* Cardurile pentru fiecare atracție */
 .attraction-card {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr; /* Stânga: imagine și titlu, mijloc: descriere, dreapta: radio buttons */
-    gap: 30px; /* Crește spațiul între coloane */
+    grid-template-columns: 1fr 2fr 150px; /* Coloana pentru radio are dimensiune fixă */
+    gap: 30px;
     margin: 30px auto;
-    padding: 30px; /* Crește padding-ul intern al cardului */
+    padding: 30px;
     background: white;
-    border-radius: 10px; /* Ușor mai rotunjit */
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Crește umbra */
-    max-width: 1200px; /* Lărgește dimensiunea maximă a cardului */
-    width: 90%; /* Asigură că se adaptează la ecrane mici */
-    align-items: center; /* Aliniază vertical elementele din fiecare coloană */
+    border-radius: 10px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    max-width: 1200px;
+    width: 60% !important; /* Dimensiunea cardului */
+    align-items: center;
 }
 
 /* Imaginea și titlul atracției */
@@ -40,8 +40,8 @@
 
 .attraction-image {
     width: 100%;
-    max-width: 250px; /* Crește dimensiunea imaginii */
-    height: 180px; /* Crește înălțimea imaginii */
+    width: 250px !important; /* Crește dimensiunea imaginii */
+    height: 180px !important; /* Crește înălțimea imaginii */
     object-fit: cover;
     border-radius: 8px; /* Ușor mai rotunjit */
 }
@@ -64,30 +64,57 @@
     padding: 0 20px; /* Adaugă mai mult spațiu lateral */
 }
 
-/* Opțiunile de tip radio */
 .radio-options {
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* Crește spațiul între opțiuni */
-    align-items: flex-start;
-    justify-self: center;
-    text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 0;
+  margin: -30px;
+  width: 100%;
 }
 
 .radio-options label {
-    font-size: 1em; /* Crește dimensiunea textului pentru radio */
+  display: flex;
+  align-items: center;
+  font-size: 1em;
+  color: #333;
+  margin: 0;
+  white-space: nowrap;
 }
 
 .radio-options input {
-    margin-right: 8px; /* Crește spațiul dintre buton și text */
+  margin-right: 10px;
+  flex-shrink: 0;
 }
+
+.radio-options fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.radio-options legend {
+  display: none;
+}
+
+.radio-options.hidden {
+    visibility: hidden; /* Ascunde elementele vizual, dar păstrează spațiul ocupat */
+    position: absolute; /* Scoate elementul din flux pentru iluzia de dispariție */
+    height: 0; /* Reduce complet dimensiunea ocupată */
+    overflow: hidden;
+}
+
+.no-radio-options .radio-options {
+    display: none;
+  }
 
 /* Responsivitate */
 @media (max-width: 600px) {
     .attraction-card {
-        grid-template-columns: 1fr; /* Pe mobil, afișează elementele pe coloane */
-        text-align: center;
-        padding: 20px; /* Reduce padding-ul pe ecrane mici */
+        grid-template-columns: 1fr;
+        width: auto !important; /* Se asigură că nu este fix */
     }
 
     .radio-options {

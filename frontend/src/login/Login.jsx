@@ -2,36 +2,31 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './login.css'; // Stilurile frontend-ului
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  //const [success, setSuccess] = useState('');
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const loginData = {
-      email: email,
-      password: password,
-    };
+    const loginData = { email, password };
 
     try {
       const response = await fetch('http://localhost:8080/clients/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(loginData),
       });
 
       if (response.ok) {
-        navigate('/myAccount'); // Redirecționează către pagina admin
+        onLogin(); // Setează autentificarea în App
+        navigate('/myAccount');
       } else {
-        setError(data.message || 'Autentificare eșuată!');
+        setError('Autentificare eșuată!');
       }
-    } catch (err) {
+    } catch {
       setError('A apărut o eroare. Te rugăm să încerci mai târziu.');
     }
   };
