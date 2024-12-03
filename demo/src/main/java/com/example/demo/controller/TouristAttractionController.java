@@ -65,4 +65,18 @@ public class TouristAttractionController {
         }
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<TouristAttraction> updateAttraction(@PathVariable Integer id, @RequestBody TouristAttraction attraction) {
+        // Verificăm dacă atracția există
+        TouristAttraction existingAttraction = touristAttractionService.getAttractionById(id);
+        if (existingAttraction == null) {
+            return ResponseEntity.notFound().build();  // Dacă atracția nu există, returnăm 404
+        }
+
+        // Actualizăm atracția
+        attraction.setIdAttraction(id);
+        TouristAttraction updatedAttraction = touristAttractionService.update(attraction);
+        return ResponseEntity.ok(updatedAttraction);  // Returnăm atracția actualizată
+    }
+
 }

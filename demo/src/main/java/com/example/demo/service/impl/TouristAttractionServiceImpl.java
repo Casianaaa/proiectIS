@@ -54,6 +54,7 @@ public class TouristAttractionServiceImpl implements TouristAttractionService {
         return attractionRepository.save(attraction);
     }
 
+
     @Override
     public Boolean deleteAttraction(Integer idAttraction) {
         if (attractionRepository.existsById(idAttraction)) {
@@ -73,4 +74,6 @@ public class TouristAttractionServiceImpl implements TouristAttractionService {
     public List<TouristAttraction> getAttractionsByLocation(String location) {
         return attractionRepository.findByLocation(location);
     }
+
+
 }
